@@ -38,13 +38,13 @@ jobs:
           git checkout master
           git merge upstream/master --no-ff -m "Merge upstream changes from nhibernate/nhibernate-core" || git merge upstream/master -m "Merge upstream changes from nhibernate/nhibernate-core"
 
-          # Remove workflow changes before pushing
-          git reset HEAD .github/workflows/
-          git checkout -- .github/workflows/
+          # Remove workflow changes and amend the merge commit if workflows were modified
+          if git diff HEAD~1 HEAD --name-only | grep -q '^.github/workflows/'; then
+            git checkout HEAD~1 -- .github/workflows/
+            git commit --amend --no-edit
+          fi
 
-      - name:
-          Push Changes to Fork
-          # Push the now-synced local master branch back to your remote fork
+      - name: Push Changes to Fork
         run: git push origin master
 
       - name: Create summary
