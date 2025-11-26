@@ -36,7 +36,7 @@ jobs:
       - name: Sync master branch
         run: |
           git checkout master
-          git merge upstream/master --ff-only
+          git merge upstream/master --no-ff -m "Merge upstream changes from nhibernate/nhibernate-core" || git merge upstream/master -m "Merge upstream changes from nhibernate/nhibernate-core"
 
           # Remove workflow changes before pushing
           git reset HEAD .github/workflows/
