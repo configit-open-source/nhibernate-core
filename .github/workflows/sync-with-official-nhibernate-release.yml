@@ -12,7 +12,6 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
-      workflows: write
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -37,7 +36,11 @@ jobs:
       - name: Sync master branch
         run: |
           git checkout master
-          git merge upstream/master --ff-only || git merge upstream/master -m "Merge upstream changes from nhibernate/nhibernate-core"
+          git merge upstream/master --ff-only
+
+          # Remove workflow changes before pushing
+          git reset HEAD .github/workflows/
+          git checkout -- .github/workflows/
 
       - name:
           Push Changes to Fork
