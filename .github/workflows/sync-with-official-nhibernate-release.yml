@@ -2,7 +2,7 @@ name: Sync NHibernate Repository with official release
 
 on:
   schedule:
-    - cron: '0 1 * * *'  # Runs daily at 1:00 AM UTC
+    - cron: "0 1 * * *" # Runs daily at 1:00 AM UTC
   workflow_dispatch:
 
 jobs:
@@ -33,15 +33,15 @@ jobs:
           git remote add upstream https://github.com/nhibernate/nhibernate-core.git
           git fetch upstream
 
-      - name: Sync main branch
+      - name: Sync master branch
         run: |
-          git checkout main
-          git merge upstream/main --ff-only || git merge upstream/main -m "Merge upstream changes from nhibernate/nhibernate-core"
+          git checkout master
+          git merge upstream/master --ff-only || git merge upstream/master -m "Merge upstream changes from nhibernate/nhibernate-core"
 
       - name:
           Push Changes to Fork
-          # Push the now-synced local main branch back to your remote fork
-        run: git push origin main
+          # Push the now-synced local master branch back to your remote fork
+        run: git push origin master
 
       - name: Create summary
         if: always()
