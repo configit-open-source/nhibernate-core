@@ -12,6 +12,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: write
+      workflows: write
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
